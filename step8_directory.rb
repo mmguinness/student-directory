@@ -23,9 +23,11 @@ def print_header
 end
 
 def print(students)
-  students.each_with_index do |student, index|
-    puts "#{index + 1}. #{student[:name]}"
-  end
+  students.each do |student|
+      if student[:name].start_with?("H") 
+        puts "#{student[:name]}"
+      end 
+    end
 end
 
 def print_footer(students)
