@@ -23,11 +23,10 @@ def print_header
 end
 
 def print(students)
-  students.each do |student|
-      if student[:name].size <= 11 
-        puts "#{student[:name]}"
-      end 
-    end
+  while students.size >= 1
+    puts "#{students[0][:name]}"
+    students.shift
+  end
 end
 
 def print_footer(students)
