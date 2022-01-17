@@ -24,7 +24,7 @@ end
 
 def print(students)
   students.each do |student|
-      if student[:name].start_with?("H") 
+      if student[:name].size <= 11 
         puts "#{student[:name]}"
       end 
     end
