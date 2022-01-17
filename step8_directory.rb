@@ -16,7 +16,11 @@ def input_students
         if answer == "yes" then cohort = "Jan 2022" end
       end
     students << {name: name, cohort: cohort}
-    puts "Now we have #{students.count} students".center(65)
+    if students.size == 1
+      puts "Now we have #{students.count} student".center(65)
+    else
+      puts "Now we have #{students.count} students".center(65)
+    end
     # get annother name from the user
     name = gets.chomp
   end
