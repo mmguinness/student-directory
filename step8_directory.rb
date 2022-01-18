@@ -4,7 +4,8 @@ def input_students
   # create and empty array
   students = []
   # get the first name
-  name = gets.chomp
+  name = gets
+  name.slice!("\n")
   # while the name is not empty repeat this code
   while !name.empty? do
     puts "Cohort".center(65)
@@ -22,7 +23,8 @@ def input_students
       puts "Now we have #{students.count} students".center(65)
     end
     # get annother name from the user
-    name = gets.chomp
+    name = gets
+    name.slice!("\n")
   end
   # Return the array of students
   students
