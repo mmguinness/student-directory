@@ -36,22 +36,24 @@ def print_header
 end
 
 def print(students)
-  cohort_options = []
-  students.select do |student|
-    cohort_options << student[:cohort]
-  end
-  cohort_options.uniq!
-  puts "The students by cohort:".center(65)
-
-  
-  while cohort_options.size >= 1
-    puts cohort_options[0].upcase.center(65, " * ")
+  if students.count < 1
+    puts "There are no students!"
+  else
+    cohort_options = []
     students.select do |student|
-      if student[:cohort] == cohort_options[0]
-      puts "#{student[:name]}".center(65)
-      end
+      cohort_options << student[:cohort]
     end
-    cohort_options.shift
+    cohort_options.uniq!
+    puts "The students by cohort:".center(65)
+    while cohort_options.size >= 1
+      puts cohort_options[0].upcase.center(65, " * ")
+      students.select do |student|
+        if student[:cohort] == cohort_options[0]
+        puts "#{student[:name]}".center(65)
+        end
+      end
+      cohort_options.shift
+    end
   end
 end
 
