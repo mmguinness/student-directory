@@ -1,20 +1,18 @@
+@students = [] # an empty array accessible to all nmethods
+
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  # create and empty array
-  students = []
   # get the first name
   name = gets.chomp
   # while the name is not empty repeat this code
   while !name.empty? do
     #add the student hash to the array
-    students << {name: name, cohort: :november}
-    puts "Now we have #{students.count} students"
+    @students << {name: name, cohort: :november}
+    puts "Now we have #{@students.count} students"
     # get annother name from the user
     name = gets.chomp
   end
-  # Return the array of students
-  students
 end
 
 def print_header
@@ -22,17 +20,48 @@ def print_header
   puts "------------"
 end
 
-def print(students)
-  students.each do |student|
+def print_student_list
+  @students.each do |student|
     puts "#{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
-def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+def print_footer
+  puts "Overall, we have #{@students.count} great students"
 end
 
-students = input_students
-print_header
-print(students)
-print_footer(students)
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
+
+def show_students
+  print_header
+  print_student_list
+  print_footer
+end
+
+def process(selection)
+  case selection
+  when "1"
+    input_students
+  when "2"
+    show_students
+  when "9"
+    exit # this will cause the program to terminate
+  else
+    puts " I don't know what you meant, try again"
+  end
+end
+
+def interactive_menu
+  loop do
+    # print the meny and ask the user what to do
+    print_menu
+    # read the input and save it into a variable
+    process(gets.chomp)
+  end
+end
+
+interactive_menu
