@@ -12,7 +12,9 @@ def input_students
 end
 
 def save_students
-  file = File.open("students.csv", "w")
+  puts "Save location?"
+  filename = STDIN.gets.chomp
+  file = File.open(filename, "w")
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
@@ -22,18 +24,12 @@ def save_students
 end
 
 def start_file
-  filename = ARGV.first
-  filename.nil? ? load_students : no_file_provided
-end
-
-def no_file_provided
-  filename = ARGV.first
-  if File.exists?(filename)
-    load_students(filename) 
-    puts "Loaded #{@students.count} from #{filename}"
-  else
-    puts "Sorry, #{filename} doesn't exist."
-    exit
+  puts "Do you want to load student files Y/N?"
+  answer = STDIN.gets.chomp
+  if answer == "N" 
+    puts "Cool beans"
+  else 
+    load_students
   end
 end
 
@@ -41,13 +37,20 @@ def extract_student_info(name)
   @students << {name: name, cohort: :november}
 end
 
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    extract_student_info(name)
+def load_students
+  puts "File location?"
+  filename = STDIN.gets.chomp
+  if File.exists?(filename)
+    file = File.open(filename, "r")
+    file.readlines.each do |line|
+      name, cohort = line.chomp.split(',')
+      extract_student_info(name)
+    end
+    file.close
+    puts "Loaded #{@students.count} students from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
   end
-  file.close
 end
 
 def print_header
