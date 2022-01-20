@@ -21,18 +21,19 @@ def save_students
   file.close
 end
 
-def try_load_students
+def start_file
   filename = ARGV.first
-  if filename.nil?
-    load_students
+  filename.nil? ? load_students : no_file_provided
+end
+
+def no_file_provided
+  filename = ARGV.first
+  if File.exists?(filename)
+    load_students(filename) 
+    puts "Loaded #{@students.count} from #{filename}"
   else
-    if File.exists?(filename)
-      load_students(filename) 
-      puts "Loaded #{@students.count} from #{filename}"
-    else
-      puts "Sorry, #{filename} doesn't exist."
-      exit
-    end
+    puts "Sorry, #{filename} doesn't exist."
+    exit
   end
 end
 
@@ -80,18 +81,12 @@ end
 
 def process(selection)
   case selection
-  when "1"
-    input_students
-  when "2"
-    show_students
-  when "3"
-    save_students
-  when "4"
-    load_students
-  when "9"
-    exit
-  else
-    puts " I don't know what you meant, try again"
+  when "1", "1." then input_students
+  when "2", "2." then show_students
+  when "3", "3." then save_students
+  when "4", "4." then load_students
+  when "9", "9." then exit
+  else puts " I don't know what you meant, try again"
   end
 end
 
@@ -102,5 +97,5 @@ def interactive_menu
   end
 end
 
-try_load_students
+start_file
 interactive_menu
