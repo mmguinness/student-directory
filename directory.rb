@@ -1,4 +1,5 @@
 @students = [] # an empty array accessible to all nmethods
+require 'csv'
 
 def input_students
   puts "Please enter the names of the students"
@@ -12,13 +13,13 @@ def input_students
 end
 
 def save_students
-  file = File.open("students.csv", "w")
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  CSV.open("students.csv", "ab") do |csv|
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      csv << csv_line
+    end
   end
-  file.close
 end
 
 def try_load_students
